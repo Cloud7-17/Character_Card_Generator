@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>笃实人物小卡生成器</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="人物小卡生成器">
+        <div class="panel form-panel">
+          <div class="brand-row">
+            <img src="笃实书院.jpg" alt="笃实书院院徽" />
+            <div>
+              <h1>笃实人物小卡</h1>
+              <p>上传照片，填写信息，生成正反两面高清卡片。</p>
+            </div>
+          </div>
+
+          <form id="cardForm" class="form-grid">
+            <label class="field upload-field">
+              <span>人物照片</span>
+              <input id="photoInput" type="file" accept="image/png,image/jpeg,image/webp" />
+              <strong>选择图片</strong>
+              <small>支持 JPG、PNG、WebP，仅在当前浏览器临时使用。</small>
+            </label>
+
+            <div class="photo-preview" id="photoPreview" aria-live="polite">
+              <span id="photoPlaceholder">照片预览</span>
+              <canvas id="cropCanvas" width="1160" height="1565" aria-label="照片裁剪预览"></canvas>
+            </div>
+
+            <div class="crop-controls" id="cropControls" hidden>
+              <label>
+                <span>缩放</span>
+                <input id="cropZoom" type="range" min="1" max="2.6" step="0.01" value="1" />
+              </label>
+              <button class="secondary compact" id="cropReset" type="button">重置裁剪</button>
+            </div>
+
+            <label class="field">
+              <span>姓名</span>
+              <input id="nameInput" type="text" maxlength="12" placeholder="请输入姓名" />
+            </label>
+
+            <label class="field">
+              <span>班级</span>
+              <select id="classInput">
+                <option value="53">笃实53</option>
+                <option value="54">笃实54</option>
+              </select>
+            </label>
+
+            <div class="question-toolbar">
+              <div>
+                <h2>随机问答</h2>
+                <p>先抽取 5 道题，再选择其中 3 道作答。</p>
+              </div>
+              <button class="secondary" id="drawQuestions" type="button">随机抽题</button>
+            </div>
+
+            <div id="questionList" class="question-list" aria-live="polite"></div>
+
+            <p id="message" class="message" role="status"></p>
+
+            <div class="actions">
+              <button id="generateBtn" type="submit">生成卡片</button>
+              <button class="secondary" id="resetBtn" type="button">清空重填</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel preview-panel">
+          <div class="preview-head">
+            <div>
+              <h2>卡面预览</h2>
+              <p>导出尺寸：1500 × 2100 px</p>
+            </div>
+          </div>
+
+          <div class="card-previews">
+            <article>
+              <div class="preview-frame">
+                <canvas id="frontCanvas" width="1500" height="2100" aria-label="正面卡片预览"></canvas>
+              </div>
+              <div class="download-row">
+                <span>正面</span>
+                <a class="download-button is-disabled" id="downloadFront" aria-disabled="true">下载 PNG</a>
+              </div>
+            </article>
+
+            <article>
+              <div class="preview-frame">
+                <canvas id="backCanvas" width="1500" height="2100" aria-label="反面卡片预览"></canvas>
+              </div>
+              <div class="download-row">
+                <span>反面</span>
+                <a class="download-button is-disabled" id="downloadBack" aria-disabled="true">下载 PNG</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="assets-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
